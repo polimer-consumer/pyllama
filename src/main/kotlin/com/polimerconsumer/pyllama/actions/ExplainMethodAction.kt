@@ -1,8 +1,5 @@
 package com.polimerconsumer.pyllama.actions
 
-import com.aallam.openai.api.chat.*
-import com.aallam.openai.api.model.ModelId
-import com.aallam.openai.client.OpenAI
 import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent

@@ -12,7 +12,7 @@ import kotlinx.coroutines.runBlocking
 @Service
 class APICallService {
     fun callChatGPTAPI(methodCode: String): String {
-        val apiKey = "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"
+        val apiKey: String = System.getenv("API_KEY") ?: System.getProperty("API_KEY") ?: ""
         val compressedMethodCode = methodCode.replace(Regex("\\s\\s+"), " ").trim()
         val prompt =
             "You will be provided a method coded in python, and your task is to explain this code in a concise way:\n$compressedMethodCode"
