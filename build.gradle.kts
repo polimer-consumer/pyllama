@@ -1,7 +1,7 @@
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "1.9.20"
-    id("org.jetbrains.intellij") version "1.16.0"
+    id("org.jetbrains.kotlin.jvm") version "1.9.21"
+    id("org.jetbrains.intellij") version "1.16.1"
 }
 
 group = "com.polimerconsumer"
@@ -11,13 +11,40 @@ repositories {
     mavenCentral()
 }
 
+dependencies {
+    implementation("com.aallam.openai:openai-client:3.6.2") {
+        exclude(group = "org.slf4j", module = "slf4j-api")
+        // Prevents java.lang.LinkageError: java.lang.LinkageError: loader constraint violation:when resolving method 'long kotlin.time.Duration.toLong-impl(long, kotlin.time.DurationUnit)'
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-common")
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk7")
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk8")
+    }
+    implementation("io.ktor:ktor-client-cio:2.3.7") {
+        exclude(group = "org.slf4j", module = "slf4j-api")
+        // Prevents java.lang.LinkageError: java.lang.LinkageError: loader constraint violation: when resolving method 'long kotlin.time.Duration.toLong-impl(long, kotlin.time.DurationUnit)'
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-common")
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk7")
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk8")
+    }
+}
+
+kotlin {
+    @Suppress("UnstableApiUsage")
+    jvmToolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+        vendor = JvmVendorSpec.JETBRAINS
+    }
+}
+
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
     version.set("2023.3")
     type.set("PY") // Target IDE Platform
 
-    plugins.set(listOf(/* Plugin Dependencies */))
+    plugins.set(listOf("Pythonid"))
 }
 
 tasks {
@@ -31,7 +58,7 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("231")
+        sinceBuild.set("233")
         untilBuild.set("241.*")
     }
 

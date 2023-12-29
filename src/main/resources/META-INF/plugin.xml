@@ -20,10 +20,20 @@
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.python</depends>
 
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-
     </extensions>
+    <actions>
+        <action id="com.polimerconsumer.pyllama.actions.ExplainMethodAction"
+                class="com.polimerconsumer.pyllama.actions.ExplainMethodAction" text="Explain Method"
+                description="This provides you with llm-generated explanation of this method">
+            <add-to-group group-id="SearchEverywhereActions" anchor="first"/>
+            <keyboard-shortcut
+                    keymap="$default"
+                    first-keystroke="control alt Q"/>
+        </action>
+    </actions>
 </idea-plugin>
