@@ -14,7 +14,6 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.util.PsiTreeUtil
 import com.jetbrains.python.psi.PyFunction
 import com.polimerconsumer.pyllama.actions.services.APICallService
-import kotlinx.coroutines.runBlocking
 
 class ExplainMethodAction : AnAction() {
     override fun update(actionEvent: AnActionEvent) {
@@ -34,19 +33,14 @@ class ExplainMethodAction : AnAction() {
             val selectedMethod = findMethodAtCaret(editor, project)
 
             if (selectedMethod != null) {
-                // Call the ChatGPT API or mock answers to get an explanation for the selected method
                 val explanation = service<APICallService>().callChatGPTAPI(selectedMethod.text)
 
-                // Show the explanation in a dialog or any other desired way
                 showExplanationDialog(project, explanation)
             }
         }
     }
 
     private fun showExplanationDialog(project: Project, explanation: String) {
-        // Implement logic to show the explanation in a dialog
-        // You can use Messages.showMessageDialog or other UI components
-        // For example:
         com.intellij.openapi.ui.Messages.showMessageDialog(
             project,
             explanation,
